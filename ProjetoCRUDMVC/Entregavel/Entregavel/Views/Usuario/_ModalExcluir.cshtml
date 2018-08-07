@@ -1,0 +1,39 @@
+﻿@model Entregavel.Models.Usuario
+<div class="modal fade" tabindex="-1" role="dialog" id="modalExcluir">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" id="ctzExcluir" onclick="Excluir(@Model.Id)" >Sim</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script type="text/javascript">
+    function Excluir(id) {
+            var idParaExcluir = {
+                Id: id
+            };
+
+            $.ajax({
+                url: "@Url.Action("Excluir", "usuario")",
+                cache: false,
+                method: "get",
+                data: idParaExcluir,
+                success: function () {
+                    $("#modalExcluir").modal('hide');
+                    InserirTable();
+                },
+                error: function () {
+                    alert("Não foi possivel Excluir o usuario");
+                }
+            });
+        }
+</script>

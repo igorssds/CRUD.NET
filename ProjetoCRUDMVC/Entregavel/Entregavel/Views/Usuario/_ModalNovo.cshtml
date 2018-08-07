@@ -1,0 +1,68 @@
+﻿<div class="modal fade" tabindex="-1" role="dialog" id="modalNovo">
+    <div class="modal-dialog" role="document">
+        <form id="formCriar">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Cadastro</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="Nome" >Nome</label>
+                    <input type="text"  id="Nome" name="Nome" />
+                </div>
+                <div class="form-group">
+                    <label for="Email">E-mail</label>
+                    <input type="text" id="Email" name="Email" />
+                </div>
+                <div class="form-group">
+                    <label for="Foto">Foto</label>
+                    <input type="file" id="Foto" name="Foto" accept="image/jpeg" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="submit" class="btn btn-primary" id="cadastrar" >Salvar</button>
+            </div>
+        </div><!-- /.modal-content -->
+      </form>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script type="text/javascript">
+    $("#formCriar").validate({
+        rules: {
+            Nome: {
+                required: true,
+                minlength: 3
+            },
+
+            Email: {
+                required: true,
+                email: true
+            }
+        },
+
+        submitHandler: function (form) {
+            var pessoa = {
+                Nome: $("#Nome").val(),
+                Email: $("#Email").val()
+            }
+            $.ajax({
+                url: "@Url.Action("cadastro", "usuario")",
+                method: "post",
+                data: new FormData(document.getElementById("formCriar")),
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: function (dados) {
+                    $("#modalNovo").modal('hide');
+                    InserirTable();
+                },
+                error: function () {
+                    alert("Houve Um erro ao Cadastrar");
+                }
+            });
+        }
+    });
+</script>

@@ -1,0 +1,27 @@
+﻿@model List<Entregavel.Models.Usuario>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Foto</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Editar</th>
+                <th>Excluir</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>@Model[i].Id</td>
+                    <td><img src="@("http://127.0.0.1:10000/devstoreaccount1/teste/web/"+ Model[i].Id + ".jpg")" style="width:50px; height:50px;" /></td>
+                    <td>@Model[i].Nome</td>
+                    <td>@Model[i].Email</td>
+                    <td><button type="button" class="btn btn-info" onclick="ChamaModalEditar(@Model[i].Id)">Editar</button></td>
+                    <td><button type="button" class="btn btn-danger" onclick="ChamaModalExcluir(@Model[i].Id)">Excluir</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>

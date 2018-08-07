@@ -1,0 +1,101 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/Assets/css/bootstrap.min.css" />
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <h1>Cadastro</h1>
+    </div>
+
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <button type="button" id="btnNovo" onclick="chamaModalNovo()" class="btn btn-primary">Novo</button>
+    </div>
+
+        <div id="tabelaDiv"></div>
+        <div id="vao"></div>
+
+    <marquee><p>Feitor por Igor e Gabriel : 40037,40039</p></marquee>
+        <script type="text/javascript" src="~/Assets/js/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="~/Assets/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="~/Assets/js/jquery.validate.min.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function () {
+            InserirTable();
+        });
+
+        function InserirTable() {
+            $.ajax({
+                url: "@Url.Action("Table", "Usuario")",
+                cache: false,
+                success: function (dados) {
+                    $("#tabelaDiv").html(dados);
+                },
+                error: function () {
+                    alert("não foi possivel trazer a tabela");
+                }
+            });
+        }
+
+        var idExcluir
+        function chamaModalNovo() {
+            $.ajax({
+                url: "@Url.Action("ModalNovo","Usuario")",
+                cache: false,
+                success: function (dados) {
+                    $("#vao").html(dados);
+                    $("#modalNovo").modal();
+                },
+                error: function () {
+                    alert("Houve um erro")
+                }
+            });
+        }
+
+        function ChamaModalExcluir(id) {
+
+            var idExcluir = {
+                Id: id
+            };
+
+            $.ajax({
+                url: "@Url.Action("ModalExcluir", "Usuario")",
+                cache: false,
+                data: idExcluir,
+                success: function (dados) {
+                    $("#vao").html(dados);
+                    $("#modalExcluir").modal();
+                },
+                error: function () {
+                    alert("Houve um erro");
+                }
+            });
+        }
+
+        function ChamaModalEditar(id) {
+            var objt = {
+                Id: id
+            };
+            $.ajax({
+                url: "@Url.Action("ModalEditar", "Usuario")",
+                cache: false,
+                method: "get",
+                data: objt,
+                success: function (dados) {
+                    $("#vao").html(dados);
+                    $("#modalEditar").modal();
+                },
+                error: function () {
+                    alert("Houve um erro");
+                }
+            });
+        }
+        </script>
+</body>
+</html>
